@@ -1,38 +1,91 @@
-# Hi there, I'm Ali Meshaimea 👋
+## good practices
 
-## 🚀 About Me
-I'm a full-stack developer in training at [Reboot01](https://learn.reboot01.com).
-I'm from Bahrain 🇧🇭 and passionate about learning new technologies and solving problems.
+### [code](https://code.tutsplus.com/tutorials/top-15-best-practices-for-writing-super-readable-code--net-8118)
 
-## 🛠 Skills (in progress)
-### Languages
-![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Bash](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnu-bash&logoColor=white)
+- Commenting and Documentation
+- Consistent Indentation
+- Avoid Obvious Comments
+- Code Grouping
+- Consistent Naming Scheme
+  - camelCase
+  - under_scores
+- [**DRY**](https://thefullstack.xyz/dry-yagni-kiss-tdd-soc-bdfu) (Don't Repeat Yourself) or [**DIE**](https://thefullstack.xyz/dry-yagni-kiss-tdd-soc-bdfu) (Duplication is Evil) principle
+- [**KISS**](https://thefullstack.xyz/dry-yagni-kiss-tdd-soc-bdfu) (Keep It Simple Stupid)
+- [**YAGNI**](https://thefullstack.xyz/dry-yagni-kiss-tdd-soc-bdfu) (You Aren’t Gonna Need It)
+- [**SOC**](https://thefullstack.xyz/dry-yagni-kiss-tdd-soc-bdfu) (Separation of Concerns)
+- Avoid Deep Nesting
+- Handling errors
+- Limit Line Length
+- File and Folder Organization
+- Consistent Temporary Names
+- Separation of Code and Data
+- Code Refactoring
 
+### Go
 
-### Tools
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![Visual Studio](https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual-studio&logoColor=white)
+- [**Go**](https://golang.org/doc/effective_go.html)
+- [**gofmt**](https://golang.org/cmd/gofmt/)
+- [**goimports**](https://godoc.org/golang.org/x/tools/cmd/goimports)
+- [**foimports vs gofmt**](https://goinbigdata.com/goimports-vs-gofmt/)
 
+### CSS
 
-## 🌍 Languages
+- [**CSS**](https://www.tothenew.com/blog/10-best-practices-in-css/)
 
-- Arabic (Native)
-- English (Fluent)
+### Dockerfile
 
-## 📫 Get in touch
+- [**Dockerfile**](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
 
-- [LinkedIn](https://www.linkedin.com/in/ali-meshaimea-2ba39b124/)
-- [Email](mailto:ali_meshaimea@outlook.com)
+### Time Limitation
 
+- Every computing programs should execute in a time limit of 5 minutes.
 
+### Game performance
 
-## 📚 Repositories
+Performance is essential, so that's why you have to aim for less than 16.7ms(1000ms/60f), because in 16.7ms the browsers job and your work must be completed in each frame.
 
-Check out my [GitHub Repositories](https://github.com/3lishaker?tab=repositories) to see my latest projects and collaborations.
+Use [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) to sync your changes
+
+- You can try to reuse memory to avoid jank when the garbage collector pass
+
+Jank animation can be caused by loading too much information, for instance:
+
+- **JavaScript**
+- **Styles** that considers which style apply to which element
+- **Layout** that calculates the geometry of the pages (example: recalculating the width and height of a page)
+- **Painting**, normally when layout is triggered we must repaint. Repainting an element every time it animates
+- **Compositing** that consists on placing the pages together at the end
+
+In order to improve performance we must remove the causes above, that are more costly: layout and painting.
+
+The best way to remove layout and painting is to use [`transform`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) and [`opacity`](https://developer.mozilla.org/en-US/docs/Web/CSS/opacity)
+
+Removing layout can be done using transform:
+
+```js
+// bad
+// this will trigger the layout to recalculate everything and repaint it again
+box.style.left = `${x * 100}px`
+
+// good
+// this way its possible to lose the layout
+box.style.transform = `translateX(${x * 100}px)`
+```
+
+It is possible to remove painting by adding a layer:
+
+```css
+/* this will take care of the painting by creating a layer and transform it*/
+  #box {
+    width: 100px;
+    height: 100px;
+    ....
+    will-change: transform;
+  }
+```
+
+By creating a new layer you can remove painting, but "there is always a tradeoff". If we add to much layers it will increase the **composition** and **update tree**. In conclusion you must promote a new layer only if you know you are going to use it. Performance is the key to a good animation. "Performance is the art of avoiding work".
+
+### UI/UX
+
+- [Best Practices](https://www.uxpin.com/studio/blog/guide-design-consistency-best-practices-ui-ux-designers/)
